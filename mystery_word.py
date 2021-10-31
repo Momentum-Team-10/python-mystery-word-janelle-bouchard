@@ -49,6 +49,123 @@
 
     # When a game ends, ask the user if they want to play again. The game begins
     # again if they reply positively.
+    # Helpful tutorial: https://www.teachwithict.com/guess.html
 
-#import the "random" module
+
+#open txt file using "with" syntax
+
+#put words from txt file into list of strings
+
+#slect one word from list to use for testing
+
+#add "level of difficulty" into the game after we get the game working
+
+#show mystery word as underscores to user
+    #ask for user guess (regardless of upper or lowercase)
+    #validate user input if user enters more than one letter
+        #user error: you can only guess one letter at a time
+        #possible to restrict number of characters?
+
+#show user if guess is part of word
+    #replace underscore with letter
+
+#show all letters that haven't been guess yet  
+    #if guessed letter is NOT in the word, add to list of guessed letters
+
+#limit number of user WRONG guesses to 8
+    #track user guess count
+    #tell the user how many guesses are left
+    #may need 2 variables to indicate correct vs. incorrect guesses
+    #display mystery word if user runs out of guesses
+    #error message if duplicate guess is entered and do not count duplicate guesses against guess count
+
+"""import the "random" module"""
 import random
+import string
+import re
+
+"""Create a string of all of the lowercase letters in the english alphabet"""
+alphabet_string = string.ascii_lowercase
+"""Convert the string into a list"""
+alphabet_list = list(alphabet_string)
+
+
+with open('test_words.txt') as file:
+    strings = file.readlines()
+    # print(strings)
+
+    """create an empty list to store the words in based on criteria when we open the text file"""
+    words = []
+    underscores = []
+    end_game = False
+
+    for string in strings:
+        words.append(string)
+
+    """Assign random_word variable to a specific word to test, and normalize the "random word" so that it disregards case"""    
+    random_word = words[7].lower()
+    # random_word = random.choice(words).lower()
+    """remove the "newline" indication, so that it's not interpreted as a character"""    
+    random_word = random_word.replace("\n", "")
+    # print(random_word)
+
+    """create a new (list) variable, called display, that literally matches our random word"""
+    display = random_word
+    """create a loop to look at each index number and replace the existing character with an underscore so that the number of underscores matches the number of characters"""
+    for index in range(len(display)):
+        display = display[0:index] + "_" + display[index+1:]
+
+    """in the display ONLY (so, only on print,) join all of the underscores with a space between them"""    
+    print(" ".join(display))
+    """normalize the user's input to ignore case"""
+    user_input = input('Make a guess... ').lower()
+
+    guess_count = 0 
+    
+    # """Create a string of all of the lowercase letters in the english alphabet"""
+    # alphabet_string = string.ascii_lowercase
+    # """Convert the string into a list"""
+    # alphabet_list = list(alphabet_string)
+
+    while user_input != "Quit" and end_game == False:
+        wrong_guesses = []
+
+        if guess_count <= 8 and random_word[index] in user_input:
+            for index in range(len(random_word)):
+                display = display[0:index] + user_input + display[index+1:]
+                # remaining_letters = alphabet_list.replace(user_input, "")
+                end_game == False
+        if guess_count <= 8 and random_word[index] not in user_input:
+            guess_count += 1
+            wrong_guesses.append(user_input)
+            # remaining_letters = alphabet_list.replace(user_input, "")
+            end_game == False
+        print(" ".join(display))
+        # print(f"Wrong guesses: {' '.join(wrong_guesses)}")
+        # print(f"Remaining letters: {remaining_letters}")
+        print(f"Guess count: {guess_count}")
+        user_input = input('Guess again... ')
+
+        # if user_input == "Quit":
+        #     end_game == True
+
+
+    ## Create a loop to count the number of characters in the word, and populate the underscores list to reflect that number
+    # word_length = range(len(random_word))
+    # for num in word_length:
+    #     underscores.append('_')
+    # underscores = "".join(underscores)
+    # print(underscores)
+    # #normalize the user's input to ignore case
+    # user_input = input('Make a guess... ').lower()
+
+    # while user_input != "Quit" and end_game == False:
+
+    #     for index in range(len(random_word)):
+    #         if random_word[index] == user_input:
+    #             underscores = underscores[0:index] + user_input + underscores[index+1:]
+    #     print(underscores)
+    #     user_input = input('Guess again... ')
+        
+    #     if user_input == "Quit":
+    #         end_game == True
