@@ -82,25 +82,23 @@
 """import the "random" module"""
 import random
 import string
-import re
 
-"""Create a string of all of the lowercase letters in the english alphabet"""
-alphabet_string = string.ascii_lowercase
-"""Convert the string into a list"""
-alphabet_list = list(alphabet_string)
+alphabet_list = list(string.ascii_lowercase)
+# print(alphabet_list)
 
-
-with open('test_words.txt') as file:
-    strings = file.readlines()
+with open('words.txt') as file:
+    word_strings = file.readlines()
     # print(strings)
 
     """create an empty list to store the words in based on criteria when we open the text file"""
     words = []
     underscores = []
+    guess_count = 0
+    # wrong_guesses = []
     end_game = False
 
-    for string in strings:
-        words.append(string)
+    for word_string in word_strings:
+        words.append(word_string)
 
     """Assign random_word variable to a specific word to test, and normalize the "random word" so that it disregards case"""    
     random_word = words[7].lower()
@@ -120,29 +118,23 @@ with open('test_words.txt') as file:
     """normalize the user's input to ignore case"""
     user_input = input('Make a guess... ').lower()
 
-    guess_count = 0 
+    guess_count == 0
+    alphabet_list = list(string.ascii_lowercase)
     
-    # """Create a string of all of the lowercase letters in the english alphabet"""
-    # alphabet_string = string.ascii_lowercase
-    # """Convert the string into a list"""
-    # alphabet_list = list(alphabet_string)
-
-    while user_input != "Quit" and end_game == False:
+    while user_input != "Quit" and guess_count <= 8:
+        alphabet_list = list(string.ascii_lowercase)
+        print(alphabet_list)
         wrong_guesses = []
-
-        if guess_count <= 8 and random_word[index] in user_input:
-            for index in range(len(random_word)):
+        for index in range(len(random_word)):    
+            if user_input in random_word[index]:
                 display = display[0:index] + user_input + display[index+1:]
-                # remaining_letters = alphabet_list.replace(user_input, "")
-                end_game == False
-        if guess_count <= 8 and random_word[index] not in user_input:
+                guess_count += 0
+            # alphabet_list.remove(user_input)
+        if user_input not in random_word[index]:
             guess_count += 1
-            wrong_guesses.append(user_input)
-            # remaining_letters = alphabet_list.replace(user_input, "")
-            end_game == False
+        letters_remaining = alphabet_list.remove(user_input)
         print(" ".join(display))
-        # print(f"Wrong guesses: {' '.join(wrong_guesses)}")
-        # print(f"Remaining letters: {remaining_letters}")
+        print(f"Remaining letters: {letters_remaining}")
         print(f"Guess count: {guess_count}")
         user_input = input('Guess again... ')
 
@@ -150,8 +142,8 @@ with open('test_words.txt') as file:
         #     end_game == True
 
 
-    ## Create a loop to count the number of characters in the word, and populate the underscores list to reflect that number
-    # word_length = range(len(random_word))
+    # ## Create a loop to count the number of characters in the word, and populate the underscores list to reflect that number
+    # # word_length = range(len(random_word))
     # for num in word_length:
     #     underscores.append('_')
     # underscores = "".join(underscores)
