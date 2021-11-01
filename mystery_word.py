@@ -101,11 +101,11 @@ with open('words.txt') as file:
         words.append(word_string)
 
     """Assign random_word variable to a specific word to test, and normalize the "random word" so that it disregards case"""    
-    random_word = words[7].lower()
-    # random_word = random.choice(words).lower()
+    # random_word = words[7].lower()
+    random_word = random.choice(words).lower()
     """remove the "newline" indication, so that it's not interpreted as a character"""    
     random_word = random_word.replace("\n", "")
-    # print(random_word)
+    print(random_word)
 
     """create a new (list) variable, called display, that literally matches our random word"""
     display = random_word
@@ -121,25 +121,38 @@ with open('words.txt') as file:
     guess_count == 0
     alphabet_list = list(string.ascii_lowercase)
     
-    while user_input != "Quit" and guess_count <= 8:
-        alphabet_list = list(string.ascii_lowercase)
-        print(alphabet_list)
-        wrong_guesses = []
-        for index in range(len(random_word)):    
-            if user_input in random_word[index]:
+    while user_input != "Quit" and end_game == False:
+        # alphabet_list = list(string.ascii_lowercase)
+        # print(alphabet_list)
+        # wrong_guesses = []   
+        for index in range(len(random_word)):
+            if user_input in random_word[index] and guess_count <= 8:
                 display = display[0:index] + user_input + display[index+1:]
                 guess_count += 0
-            # alphabet_list.remove(user_input)
-        if user_input not in random_word[index]:
+        if user_input not in random_word[index] and guess_count < 8:
             guess_count += 1
-        letters_remaining = alphabet_list.remove(user_input)
+        
+            # remaining_letters = alphabet_list.remove(user_input)
+        # print(alphabet_list)
+        remaining_letters = alphabet_list.remove(user_input)
         print(" ".join(display))
-        print(f"Remaining letters: {letters_remaining}")
+        print(f"Remaining letters: {str(remaining_letters)}")
         print(f"Guess count: {guess_count}")
         user_input = input('Guess again... ')
+        if user_input not in random_word[index] and guess_count == 8:
+            end_game == True
+            print(f"Game overrrr!!! The word was {random_word}.")
+    #         user_input = input("Would you like to play again (Y/N)? ")
+    #             if user_input == "y":
 
-        # if user_input == "Quit":
-        #     end_game == True
+    # if user_input == "Quit":
+    #     end_game == True
+
+
+
+    # if user_input not in random_word[index] and guess_count == 8:
+    #             end_game == True
+
 
 
     # ## Create a loop to count the number of characters in the word, and populate the underscores list to reflect that number
